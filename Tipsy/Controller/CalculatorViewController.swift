@@ -16,9 +16,12 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var twentyPercentButton: UIButton!
     @IBOutlet weak var stepperLabel: UILabel!
     
-    var tipValue = "10%"
+    var tipValue: String = "10%"
+    var stepperValue: Int = 2
     
     @IBAction func tipChanged(_ sender: UIButton) {
+        
+        billTextField.endEditing(true)
         
         let isZeroPercent = sender == zeroPercentButton
         let isTenPercent = sender == tenPercentButton
@@ -30,20 +33,25 @@ class CalculatorViewController: UIViewController {
             self.twentyPercentButton.isSelected = isTwentyPercent
         }
         
-        tipValue = sender.currentTitle!
+        tipValue = sender.currentTitle ?? "10%"
         
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        stepperValue = Int(sender.value)
         DispatchQueue.main.async {
-            self.stepperLabel.text = String(Int(sender.value))
+            self.stepperLabel.text = String(self.stepperValue)
         }
     }
     
     @IBAction func calculatePressed(_ sender: UIButton) {
         tipValue = tipValue.replacingOccurrences(of: "%", with: "")
-        let tip = Double(tipValue)! / 100.0
-        print(tip)
+        let tip = (Double(tipValue) ?? 0.0) / 100.0
+        let billAmount = Double(billTextField.text ?? "0.0") ?? 0
+        let splitCount = Double(stepperValue)
+        let totalAmount = (billAmount + (billAmount * tip)) / splitCount
+        print(totalAmount)
+        
     }
     
     

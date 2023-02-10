@@ -199,6 +199,7 @@
                     </view>
                     <connections>
                         <outlet property="billTextField" destination="wcN-ka-Q4F" id="oX2-3F-G9q"/>
+                        <outlet property="stepperLabel" destination="bSy-Yc-886" id="s2x-K3-Qe2"/>
                         <outlet property="tenPercentButton" destination="7y6-Kf-yF0" id="W9x-lC-aNe"/>
                         <outlet property="twentyPercentButton" destination="UtR-dU-EKt" id="041-Kt-DeV"/>
                         <outlet property="zeroPercentButton" destination="XzR-0E-Xf7" id="nLh-z5-9Pa"/>

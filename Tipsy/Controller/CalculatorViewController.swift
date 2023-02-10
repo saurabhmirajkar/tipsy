@@ -14,8 +14,9 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var zeroPercentButton: UIButton!
     @IBOutlet weak var tenPercentButton: UIButton!
     @IBOutlet weak var twentyPercentButton: UIButton!
+    @IBOutlet weak var stepperLabel: UILabel!
     
-    var tipValue = "0"
+    var tipValue = "10%"
     
     @IBAction func tipChanged(_ sender: UIButton) {
         
@@ -34,6 +35,9 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        DispatchQueue.main.async {
+            self.stepperLabel.text = String(Int(sender.value))
+        }
     }
     
     @IBAction func calculatePressed(_ sender: UIButton) {

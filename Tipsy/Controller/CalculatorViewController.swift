@@ -16,8 +16,10 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var twentyPercentButton: UIButton!
     @IBOutlet weak var stepperLabel: UILabel!
     
-    var tipValue: String = "10%"
+    var tipPercentage: String = "10%"
     var stepperValue: Int = 2
+    
+    var calculatorBrain = CalculatorBrain()
     
     @IBAction func tipChanged(_ sender: UIButton) {
         
@@ -33,7 +35,7 @@ class CalculatorViewController: UIViewController {
             self.twentyPercentButton.isSelected = isTwentyPercent
         }
         
-        tipValue = sender.currentTitle ?? "10%"
+        tipPercentage = sender.currentTitle ?? "10%"
         
     }
     
@@ -45,15 +47,17 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func calculatePressed(_ sender: UIButton) {
-        tipValue = tipValue.replacingOccurrences(of: "%", with: "")
-        let tip = (Double(tipValue) ?? 0.0) / 100.0
-        let billAmount = Double(billTextField.text ?? "0.0") ?? 0
-        let splitCount = Double(stepperValue)
-        let totalAmount = (billAmount + (billAmount * tip)) / splitCount
-        print(totalAmount)
+        calculatorBrain.calculateBill(tipPercentage: tipPercentage, billAmount: billTextField.text, splitCount: stepperValue)
         
+        performSegue(withIdentifier: "goToResult", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToResult" {
+            let destinationVC = segue.destination as! ResultViewController
+            destinationVC.split = calculatorBrain.retrieveBill()
+        }
+    }
     
 }
 
